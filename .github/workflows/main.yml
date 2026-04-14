@@ -11,8 +11,8 @@ jobs:
     steps:
     - name: Trigger Supabase Edge Function
       run: |
-        curl -L -X POST '${{secrets.SUPABASE_API_KEY_UTOP_STANDING}}' \
+        curl -L -X POST '${{ secrets.SUPABASE_API_KEY_UTOP_STANDING }}' \
           -H 'Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}' \
-          -H 'apikey: ${{secrets.SUPABASE_PUBLISHABLE_KEY}}' \
+          -H 'apikey: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}' \
           -H 'Content-Type: application/json' \
           --data '{"name":"Functions"}'
