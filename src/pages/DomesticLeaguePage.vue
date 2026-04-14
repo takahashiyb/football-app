@@ -1,9 +1,33 @@
 <script lang="ts" setup>
-import { standings } from '@/assets/data/spain'
 import { resolveTextColor } from '@/assets/util/color'
+import { supabase } from '@/lib/supabase'
 import { onBeforeMount, ref } from 'vue'
+import { useRoute } from 'vue-router'
 
-const leagueTable = standings
+const route = useRoute()
+
+const idList: { [key: string]: number } = {
+  'premier-league': 17,
+  'la-liga': 8,
+  bundesliga: 35,
+  'ligue-1': 34,
+  'seria-a': 23,
+}
+
+const leagueTable = ref()
+
+onBeforeMount(async () => {
+  const { data, error } = await supabase
+    .from('league-data')
+    .select('*')
+    .eq('api_id', idList[route.query.league as string])
+
+  if (error) {
+    console.error(error)
+  } else {
+    leagueTable.value = data[0].data
+  }
+})
 
 const maxGames = 38
 
@@ -16,19 +40,19 @@ const isTimelinesOpen = ref<boolean>(true)
 const whichTimelineOpen = ref<'league' | 'ucl' | 'el' | 'rel'>('league')
 
 function getMaxPoints(position: number) {
-  const team = leagueTable.standings[0]?.rows[position - 1]
+  const team: Team = leagueTable.value.standings[0]?.rows[position - 1]
 
   return (maxGames - team!.matches) * 3 + team!.points
 }
 
 function getPoints(position: number) {
-  const points = leagueTable.standings[0]?.rows[position - 1]?.points
+  const points = leagueTable.value.standings[0]?.rows[position - 1]?.points
 
   return points ? points : 0
 }
 
 function getMaxPlayed() {
-  const max = Object.values(leagueTable.standings[0]!.rows).reduce((a, b) =>
+  const max = Object.values(leagueTable.value.standings[0]!.rows as Team).reduce((a, b) =>
     a.matches > b.matches ? a : b,
   )
 
@@ -36,7 +60,7 @@ function getMaxPlayed() {
 }
 
 function getMinPlayed() {
-  const min = Object.values(leagueTable.standings[0]!.rows).reduce((a, b) =>
+  const min = Object.values(leagueTable.value.standings[0]!.rows as Team).reduce((a, b) =>
     a.matches < b.matches ? a : b,
   )
 
@@ -44,7 +68,7 @@ function getMinPlayed() {
 }
 
 function getClLastSpot() {
-  const lastSPot = Object.values(leagueTable.standings[0]!.rows)
+  const lastSPot = Object.values(leagueTable.value.standings[0]!.rows as Team)
     .filter((team) => team.promotion?.id === 804)
     .reduce((acc, curr) => (acc.position > curr.position ? acc : curr))
 
@@ -52,7 +76,7 @@ function getClLastSpot() {
 }
 
 function getElLastSpot() {
-  const lastSPot = Object.values(leagueTable.standings[0]!.rows)
+  const lastSPot = Object.values(leagueTable.value.standings[0]!.rows as Team)
     .filter((team) => team.promotion?.id === 808)
     .reduce((acc, curr) => (acc.position > curr.position ? acc : curr))
 
@@ -60,7 +84,7 @@ function getElLastSpot() {
 }
 
 function getRelTopSpot() {
-  const topSPot = Object.values(leagueTable.standings[0]!.rows)
+  const topSPot = Object.values(leagueTable.value.standings[0]!.rows as Team)
     .filter((team) => team.promotion?.id === 3)
     .reduce((acc, curr) => (acc.position < curr.position ? acc : curr))
 
@@ -71,13 +95,13 @@ function getRemainingMatches() {
   return maxGames - getMinPlayed() + 1
 }
 
-interface bar {
+interface Bar {
   class: string
   span: number
   value: number
 }
 
-interface team {
+interface Team {
   team: {
     name: string
     slug: string
@@ -124,13 +148,13 @@ interface team {
   scoreDiffFormatted: string
 }
 
-function getLeagueRace(team: team) {
-  const current: bar = {
+function getLeagueRace(team: Team) {
+  const current: Bar = {
     class: 'current-points',
     span: team.matches - getMinPlayed() + 1,
     value: team.points,
   }
-  const champ: bar = {
+  const champ: Bar = {
     class: 'take-league',
     span:
       getPoints(2) <= getMaxPoints(team.position) && team.position === 1
@@ -140,7 +164,7 @@ function getLeagueRace(team: team) {
         : 0,
     value: Math.ceil((getMaxPoints(2) - getPoints(team.position) + 1) / 3) * 3 + team.points,
   }
-  const eplChaser: bar = {
+  const eplChaser: Bar = {
     class: 'overtake-league',
     span:
       getPoints(1) <= getMaxPoints(team.position) && team.position > 1
@@ -152,13 +176,13 @@ function getLeagueRace(team: team) {
     value: Math.ceil((getPoints(1) - team.points) / 3) * 3 + team.points,
   }
 
-  const eplEmpty: bar = {
+  const eplEmpty: Bar = {
     class: 'emptybar',
     span: maxGames - (getMinPlayed() + (current.span - 1 + eplChaser.span + champ.span)),
     value: 0,
   }
 
-  const ucl: bar = {
+  const ucl: Bar = {
     class: 'take-cl',
     span:
       getPoints(getClLastSpot() + 1) <= getMaxPoints(team.position) &&
@@ -171,7 +195,7 @@ function getLeagueRace(team: team) {
       team.points,
   }
 
-  const uclChaser: bar = {
+  const uclChaser: Bar = {
     class: 'overtake-cl',
     span:
       getPoints(getClLastSpot()) <= getMaxPoints(team.position) && team.position > getClLastSpot()
@@ -180,13 +204,13 @@ function getLeagueRace(team: team) {
     value: Math.ceil((getPoints(getClLastSpot()) - team.points) / 3) * 3 + team.points,
   }
 
-  const uclEmpty: bar = {
+  const uclEmpty: Bar = {
     class: 'emptybar',
     span: maxGames - (team.matches + uclChaser.span + ucl.span),
     value: 0,
   }
 
-  const el: bar = {
+  const el: Bar = {
     class: 'take-el',
     span:
       getPoints(getElLastSpot()) <= getMaxPoints(team.position) &&
@@ -197,7 +221,7 @@ function getLeagueRace(team: team) {
     value: Math.ceil((getPoints(getElLastSpot()) - team.points) / 3) * 3 + team.points,
   }
 
-  const elChaser: bar = {
+  const elChaser: Bar = {
     class: 'overtake-el',
     span:
       getPoints(getElLastSpot() + 1) <= getMaxPoints(team.position) &&
@@ -209,13 +233,13 @@ function getLeagueRace(team: team) {
       team.points,
   }
 
-  const elEmpty: bar = {
+  const elEmpty: Bar = {
     class: 'emptybar',
     span: maxGames - (getMinPlayed() + (current.span - 1 + elChaser.span + el.span)),
     value: 0,
   }
 
-  const demotion: bar = {
+  const demotion: Bar = {
     class: 'safe-relegation',
     span:
       getPoints(getRelTopSpot() - 1) < getMaxPoints(team.position) &&
@@ -228,7 +252,7 @@ function getLeagueRace(team: team) {
     value: Math.ceil((getPoints(getRelTopSpot() - 1) - team.points) / 3) + team.points,
   }
 
-  const demotionEscape: bar = {
+  const demotionEscape: Bar = {
     class: 'exit-relegation',
     span:
       getPoints(team.position) <= getMaxPoints(getRelTopSpot()) && team.position < getRelTopSpot()
@@ -241,7 +265,7 @@ function getLeagueRace(team: team) {
       team.points,
   }
 
-  const demotionEmpty: bar = {
+  const demotionEmpty: Bar = {
     class: 'emptybar',
     span: maxGames - (getMinPlayed() + (current.span - 1 + demotion.span + demotionEscape.span)),
     value: 0,
@@ -267,6 +291,7 @@ function getLeagueRace(team: team) {
 
 <template>
   <div
+    v-if="leagueTable"
     class="title"
     :style="{
       '--primary': leagueTable.standings[0]?.tournament.uniqueTournament.primaryColorHex,
@@ -301,7 +326,7 @@ function getLeagueRace(team: team) {
     </select>
   </div>
   <hr />
-  <div class="container__table">
+  <div v-if="leagueTable" class="container__table">
     <table>
       <colgroup>
         <col span="3" />
