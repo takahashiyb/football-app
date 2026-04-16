@@ -2,7 +2,7 @@ name: Scheduled Standings Update
 
 on:
   schedule:
-    - cron: '49 1 * * *'
+    - cron: '20 2 * * *'
 
 jobs:
   trigger-edge-function:
