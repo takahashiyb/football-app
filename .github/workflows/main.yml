@@ -3,6 +3,7 @@ name: Scheduled Standings Update
 on:
   schedule:
     - cron: '11 8 * * *'
+  workflow_dispatch:
 
 jobs:
   trigger-edge-function:
