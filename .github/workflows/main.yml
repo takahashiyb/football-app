@@ -12,7 +12,7 @@ jobs:
     steps:
     - name: Trigger Supabase Edge Function
       run: |
-        curl -L -X POST 'https://hsgqhgtdcyypxrvmpxmx.supabase.co/functions/v1/update-Top-Standing' \
-          -H 'apikey: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}' \
-          -H 'Content-Type: application/json' \
-          --data '{"name":"Functions"}'
+        curl -L -X POST "https://hsgqhgtdcyypxrvmpxmx.supabase.co/functions/v1/update-Top-Standing" \
+          -H "apikey: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
+          -H "Content-Type: application/json" \
+          --data "{"name":"Functions"}"
