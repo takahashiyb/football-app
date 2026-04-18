@@ -25,7 +25,7 @@ onBeforeMount(async () => {
   if (error) {
     console.error(error)
   } else {
-    leagueTable.value = data[0].data
+    leagueTable.value = JSON.parse(data[0].data)
   }
 })
 
