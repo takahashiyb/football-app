@@ -1,0 +1,58 @@
+// / Colors:
+// // Neutrals:
+$white: #ffffff;
+$black: #000000;
+
+// /// Greys:
+$grey-800: #334253;
+$grey-500: #67727e;
+$grey-100: #e9ebf0;
+$grey-050: #f5f6fa;
+
+// // Purple:
+$purple-600: #5357b6;
+$purple-200: #c5c6ef;
+
+// // Pink:
+$pink-400: #ed6368;
+$pink-200: #ffb8bb;
+
+// TYPOGRAPHY
+
+// / Font 1: Kumbh Sans:
+$font-family: 'Rubik';
+
+$font-1: (
+  font-size: f.rem(24),
+  font-weight: 500,
+  line-height: 1.2,
+  letter-spacing: em(0),
+);
+
+$font-2-m: (
+  font-size: f.rem(16),
+  font-weight: 500,
+  line-height: 1.5,
+  letter-spacing: em(0),
+);
+
+$font-2-r: (
+  font-size: f.rem(16),
+  font-weight: 400,
+  line-height: 1.5,
+  letter-spacing: em(0),
+);
+
+$font-3: (
+  font-size: f.rem(13),
+  font-weight: 500,
+  line-height: 1.2,
+  letter-spacing: em(0),
+);
+
+// Spacing:
+
+$spacing-0100: f.em(8);
+$spacing-0200: f.em(16);
+$spacing-0300: f.em(24);
+$spacing-0500: f.em(40);
