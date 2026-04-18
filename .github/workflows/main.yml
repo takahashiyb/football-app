@@ -2,9 +2,9 @@ name: Scheduled Standings Update
 
 on:
   schedule:
-    - cron: '0 9 * * 6,0'
+    - cron: '0 21 * * 6,0'
       timezone: "Asia/Manila"
-    - cron: '0 11 * * 6,0'
+    - cron: '0 23 * * 6,0'
       timezone: "Asia/Manila"
     - cron: '0 1 * * 0,1'
       timezone: "Asia/Manila"
