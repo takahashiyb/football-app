@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
 html {
   font-family: 'PT Sans';
   font-weight: 700;
@@ -8,12 +10,16 @@ html {
   background-color: rgb(245, 245, 245);
 }
 
-body {
-  margin: 0;
+h1 {
+  font-weight: 900;
+  font-size: 3rem;
+  font-style: italic;
+
+  color: var(--text);
 }
 
-* {
-  box-sizing: border-box;
+.h1-subtext {
+  font-size: 1.5rem;
 
-  padding: 0;
+  color: var(--text);
 }

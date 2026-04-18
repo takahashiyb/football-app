@@ -298,7 +298,7 @@ function getLeagueRace(team: Team) {
 </script>
 
 <template>
-  <div class="loading-screen" v-if="isLoading"><LoadingBall /></div>
+  <LoadingBall v-if="isLoading" />
   <div
     v-if="!isLoading"
     class="title"
@@ -310,7 +310,7 @@ function getLeagueRace(team: Team) {
     <h1>
       {{ leagueTable.standings[0]?.name }}
     </h1>
-    <p>
+    <p class="h1-subtext">
       {{ leagueTable.standings[0]?.tournament.category.name }}
     </p>
   </div>
@@ -327,7 +327,7 @@ function getLeagueRace(team: Team) {
       <input type="checkbox" v-model="isTimelinesOpen" />
       {{ `${isTimelinesOpen ? 'Close' : 'Open'} Timelines` }}
     </label>
-    <select v-model="whichTimelineOpen" v-if="isTimelinesOpen">
+    <select v-model="whichTimelineOpen" v-if="isTimelinesOpen" name="timeline-group">
       <option name="timeline" value="league">Title Race</option>
       <option name="timeline" value="ucl">UEFA Champions League Race</option>
       <option name="timeline" value="el">Europa League Race</option>
@@ -677,15 +677,6 @@ function getLeagueRace(team: Team) {
 </template>
 
 <style lang="scss" scoped>
-.loading-screen {
-  min-height: 100svh;
-  background-color: white;
-
-  display: grid;
-  justify-content: center;
-  align-items: center;
-}
-
 .title {
   --primary: white;
   --secondary: black;
@@ -703,21 +694,10 @@ function getLeagueRace(team: Team) {
     var(--secondary) 80%,
     var(--primary)
   );
-  color: var(--text);
 
   padding-top: 8px;
   padding-bottom: 16px;
   padding-inline: 2em;
-}
-
-.title h1 {
-  font-style: italic;
-  font-weight: 900;
-  font-size: 3rem;
-}
-
-.title p {
-  font-size: 1.5rem;
 }
 
 .container__checkboxes {
