@@ -2,7 +2,16 @@ name: Scheduled Standings Update
 
 on:
   schedule:
-    - cron: '1 6 * * *'
+    - cron: '0 9 * * 6,0'
+      timezone: "Asia/Manila"
+    - cron: '0 11 * * 6,0'
+      timezone: "Asia/Manila"
+    - cron: '0 1 * * 0,1'
+      timezone: "Asia/Manila"
+    - cron: '0 3 * * 0,1'
+      timezone: "Asia/Manila"
+    - cron: '0 5 * * *'
+      timezone: "Asia/Manila"
 
 jobs:
   trigger-edge-function:
