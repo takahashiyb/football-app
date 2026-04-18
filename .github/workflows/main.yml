@@ -1,0 +1,17 @@
+name: Scheduled Standings Update
+
+on:
+  schedule:
+    - cron: '1 6 * * *'
+
+jobs:
+  trigger-edge-function:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Trigger Supabase Edge Function
+      run: |
+        curl -L -X POST "https://hsgqhgtdcyypxrvmpxmx.supabase.co/functions/v1/update-Top-Standing" \
+          -H "apikey: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
+          -H "Content-Type: application/json" \
+          --data '{"name":"Functions"}'
