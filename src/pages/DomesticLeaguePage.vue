@@ -1,10 +1,13 @@
 <script lang="ts" setup>
 import { resolveTextColor } from '@/assets/util/color'
+import LoadingBall from '@/components/LoadingBall.vue'
 import { supabase } from '@/lib/supabase'
 import { onBeforeMount, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
+
+const isLoading = ref<boolean>(true)
 
 const idList: { [key: string]: number } = {
   'premier-league': 17,
@@ -26,6 +29,10 @@ onBeforeMount(async () => {
     console.error(error)
   } else {
     leagueTable.value = JSON.parse(data[0].data)
+
+    setTimeout(() => {
+      isLoading.value = false
+    }, 2000)
   }
 })
 
@@ -148,6 +155,7 @@ interface Team {
   scoreDiffFormatted: string
 }
 
+// Retrieves various bar for graphs to display positions of teams for honors/qualifications
 function getLeagueRace(team: Team) {
   const current: Bar = {
     class: 'current-points',
@@ -290,8 +298,9 @@ function getLeagueRace(team: Team) {
 </script>
 
 <template>
+  <div class="loading-screen" v-if="isLoading"><LoadingBall /></div>
   <div
-    v-if="leagueTable"
+    v-if="!isLoading"
     class="title"
     :style="{
       '--primary': leagueTable.standings[0]?.tournament.uniqueTournament.primaryColorHex,
@@ -305,7 +314,7 @@ function getLeagueRace(team: Team) {
       {{ leagueTable.standings[0]?.tournament.category.name }}
     </p>
   </div>
-  <div class="container__checkboxes">
+  <div v-if="!isLoading" class="container__checkboxes">
     <label>
       <input type="checkbox" v-model="isStatsOpen" />
       {{ `${isStatsOpen ? 'Close' : 'Open'} Point Tally` }}
@@ -325,8 +334,7 @@ function getLeagueRace(team: Team) {
       <option name="timeline" value="rel">Relegation Battle</option>
     </select>
   </div>
-  <hr />
-  <div v-if="leagueTable" class="container__table">
+  <div v-if="!isLoading" class="container__table">
     <table>
       <colgroup>
         <col span="3" />
@@ -669,6 +677,15 @@ function getLeagueRace(team: Team) {
 </template>
 
 <style lang="scss" scoped>
+.loading-screen {
+  min-height: 100svh;
+  background-color: white;
+
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
 .title {
   --primary: white;
   --secondary: black;
@@ -705,7 +722,8 @@ function getLeagueRace(team: Team) {
 
 .container__checkboxes {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, min-content);
+  gap: 8px;
 
   margin: 2em;
 
@@ -717,11 +735,18 @@ function getLeagueRace(team: Team) {
 
   padding-top: 1em;
   padding-bottom: 1em;
+
+  border-bottom: 1px grey solid;
+}
+
+.container__checkboxes label {
+  white-space: nowrap;
 }
 
 .container__table {
   width: calc(100dvw - 5em);
   overflow-y: auto;
+
   margin-inline: 2em;
 }
 
