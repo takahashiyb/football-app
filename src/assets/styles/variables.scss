@@ -1,21 +1,25 @@
+@use '@/assets/styles/functions.scss' as f;
+
 // / Colors:
+
 // // Neutrals:
-$white: #ffffff;
-$black: #000000;
+$white: 0, 0%, 100%;
+$black: 0, 0%, 0%;
 
 // /// Greys:
-$grey-800: #334253;
-$grey-500: #67727e;
-$grey-100: #e9ebf0;
-$grey-050: #f5f6fa;
+$grey-800: 212, 24%, 26%;
+$grey-500: 211, 10%, 45%;
+$grey-100: 223, 19%, 93%;
 
 // // Purple:
-$purple-600: #5357b6;
-$purple-200: #c5c6ef;
+$purple-800: 262, 52%, 47%;
 
-// // Pink:
-$pink-400: #ed6368;
-$pink-200: #ffb8bb;
+// // Yellow:
+$yellow-800: 45, 100%, 51%;
+
+// // Red:
+$red-800: 356, 100%, 38%;
+$red-400: 7, 100%, 83%;
 
 // TYPOGRAPHY
 
@@ -23,30 +27,37 @@ $pink-200: #ffb8bb;
 $font-family: 'Rubik';
 
 $font-1: (
-  font-size: f.rem(24),
-  font-weight: 500,
-  line-height: 1.2,
-  letter-spacing: em(0),
+  font-size: f.rem(48),
+  font-weight: 900,
+  line-height: 1,
+  letter-spacing: em(16),
 );
 
-$font-2-m: (
-  font-size: f.rem(16),
-  font-weight: 500,
-  line-height: 1.5,
-  letter-spacing: em(0),
-);
-
-$font-2-r: (
-  font-size: f.rem(16),
-  font-weight: 400,
-  line-height: 1.5,
+$font-2: (
+  font-size: f.rem(40),
+  font-weight: 700,
+  line-height: 1,
   letter-spacing: em(0),
 );
 
 $font-3: (
-  font-size: f.rem(13),
-  font-weight: 500,
-  line-height: 1.2,
+  font-size: f.rem(24),
+  font-weight: 700,
+  line-height: 1,
+  letter-spacing: em(0),
+);
+
+$font-4: (
+  font-size: f.rem(16),
+  font-weight: 700,
+  line-height: 1,
+  letter-spacing: em(0),
+);
+
+$font-5: (
+  font-size: f.rem(12),
+  font-weight: 700,
+  line-height: 1,
   letter-spacing: em(0),
 );
 
@@ -55,4 +66,14 @@ $font-3: (
 $spacing-0100: f.em(8);
 $spacing-0200: f.em(16);
 $spacing-0300: f.em(24);
+
+$spacing-0400: f.em(32);
 $spacing-0500: f.em(40);
+$spacing-0600: f.em(48);
+
+$spacing-0800: f.em(64);
+$spacing-1000: f.em(80);
+$spacing-1200: f.em(96);
+
+$spacing-1600: f.em(128);
+$spacing-2000: f.em(160);

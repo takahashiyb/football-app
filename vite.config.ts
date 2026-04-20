@@ -16,9 +16,10 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         additionalData: `
-        @use '/src/assets/styles/variables.scss' as v;
-        @use '/src/assets/styles/functions.scss' as f;
-        @use '/src/assets/styles/resets.scss' as reset;
+        @use '@/assets/styles/variables.scss' as v;
+        @use '@/assets/styles/functions.scss' as f;
+        @use '@/assets/styles/resets.scss' as reset;
+        @use '@/assets/styles/properties.scss' as properties;
         `,
       },
     },

@@ -1,0 +1,63 @@
+@use '@/assets/styles/variables.scss' as v;
+
+:root {
+  --neutral-color: #{v.$grey-800};
+  --black-color: #{v.$black};
+  --white-color: #{v.$white};
+
+  // light mode
+  --primary-color-l: #{v.$black};
+  --secondary-color-l: #{v.$grey-500};
+  --emphasis-color-l: #{v.$red-800};
+  --subtle-color-l: #{v.$red-400};
+  --error-color-l: #{v.$purple-800};
+
+  --primary-bg-color-l: #{v.$white};
+  --secondary-bg-color-l: #{v.$grey-100};
+
+  --primary-brdr-color-l: #{v.$red-400};
+
+  // dark mode
+  --primary-color-d: #{v.$white};
+  --secondary-color-d: #{v.$grey-500};
+  --emphasis-color-d: #{v.$red-800};
+  --subtle-color-d: #{v.$red-400};
+  --error-color-d: #{v.$yellow-800};
+
+  --primary-bg-color-d: #{v.$black};
+  --secondary-bg-color-d: #{v.$grey-800};
+
+  --primary-brdr-color-d: #{v.$red-800};
+}
+
+html,
+html * {
+  --neutral: var(--neutral-color);
+
+  --primary-color: var(--primary-color-l);
+  --secondary-color: var(--secondary-color-l);
+  --emphasis-color: var(--emphasis-color-l);
+  --subtle-color: var(--subtle-color-l);
+
+  --error-color: var(--error-color-l);
+
+  --primary-bg-color: var(--primary-bg-color-l);
+  --secondary-bg-color: var(--secondary-bg-color-l);
+
+  --primary-brdr-color: var(--primary-brdr-color-l);
+}
+
+html.dark,
+html.dark * {
+  --primary-color: var(--primary-color-d);
+  --secondary-color: var(--secondary-color-d);
+  --emphasis-color: var(--emphasis-color-d);
+  --subtle-color: var(--subtle-color-d);
+
+  --error-color: var(--error-color-d);
+
+  --primary-bg-color: var(--primary-bg-color-d);
+  --secondary-bg-color: var(--secondary-bg-color-d);
+
+  --primary-brdr-color: var(--primary-brdr-color-d);
+}

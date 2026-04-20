@@ -3,23 +3,41 @@
 html {
   font-family: 'PT Sans';
   font-weight: 700;
-  letter-spacing: 0.1em;
 
   padding-bottom: 5em;
 
-  background-color: rgb(245, 245, 245);
+  scrollbar-width: none;
+
+  background-color: hsl(var(--primary-bg-color));
+}
+
+body * {
+  color: hsl(var(--primary-color));
 }
 
 h1 {
-  font-weight: 900;
-  font-size: 3rem;
   font-style: italic;
 
-  color: var(--text);
+  @include f.flat-type(v.$font-1);
+
+  color: hsl(var(--white-color));
 }
 
 .h1-subtext {
-  font-size: 1.5rem;
+  @include f.flat-type(v.$font-3);
 
-  color: var(--text);
+  color: hsl(var(--white-color));
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0); /* Fallback for older browsers */
+  clip-path: inset(50%); /* Modern alternative */
+  white-space: nowrap;
+  border: 0;
 }
