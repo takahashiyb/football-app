@@ -38,12 +38,14 @@
 
 <style scoped lang="scss">
 .loading-screen {
-  min-height: 100svh;
-  background-color: white;
+  background-color: hsl(var(--primary-bg-color));
 
   display: grid;
   justify-content: center;
   align-items: center;
+
+  position: fixed;
+  inset: 0;
 }
 
 .container__loading {
@@ -68,17 +70,17 @@
   align-content: space-around;
   align-items: center;
 
-  animation: back 2s linear infinite;
+  animation: back 2s ease-out infinite;
 }
 
 .background div {
   height: 1rem;
   width: 1rem;
-  background-color: green;
+  background-color: hsl(var(--emphasis-color));
 
   border-radius: 50%;
 
-  animation: dots 2s linear infinite;
+  animation: dots 2s ease-out infinite;
 
   transform-origin: center left;
 }
@@ -96,7 +98,7 @@
 }
 
 .ball {
-  background-color: white;
+  background-color: hsl(var(--white-color));
   border-radius: 50%;
 
   animation: rotate 2s linear infinite;
@@ -106,10 +108,8 @@
   grid-row: 1;
 
   align-self: end;
-}
 
-#ball-mask {
-  fill: black;
+  box-shadow: 0 0 0 3px var(--primary-bg-color) inset;
 }
 
 @keyframes rotate {
